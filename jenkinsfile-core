@@ -4,16 +4,18 @@ def containers = [
 def volumes = [
     hostPathVolume(mountPath: '/home/jenkins/jenkinsfile', hostPath: '/var/jenkins_home/jenkinsfile')
 ]
-def stages() {
-    stage('Load File') {
+def preStages() {
+    stage('preStages...') {
 	git 'https://github.com/unfor9otten/gs-caching.git'
 	container('maven') {
-	    sh 'cat jenkinsfile'
+	    sh 'cat plugins.txt'
 	}
     }
-    stage('load After') {
+}
+def postStages() {
+    stage('Docker deploy') {
 	container('maven') {
-	    sh 'echo "load After stage success!!!"'
+	    sh 'echo "deploy!!"'
 	}
     }
 }
